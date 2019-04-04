@@ -1,0 +1,517 @@
+* Compiled vs Interpreted:
+Compiled code is faster
+Interpreters make coding easier
+	- Infer types
+	- Garbage collection
+
+* Go is compiled
+* Automatic garbage collection module
+* Go is weakly object-oriented
+* Go does not have term class
+* It has structs with associated functions
+
+* Organised into packages
+* Hierarchy of directories recommended
+* Finds packages in GOPATH and GOROOT env var
+* Must have main package with main func
+
+* go build - compiles the program
+Creates an exec
+* go doc - Prints doc for package
+* go fmt - Formats src code files
+* go get - Install package
+* go list - Installs all packages
+* go run - compiles go files and runs exec
+* go test - runs tests using files *_test.go
+
+
+=> VARIABLES
+- case sensitive
+- var x int
+- var x, y int
+
+> VARIABLE TYPES
+- Integer
+- Floating point
+- String
+
+> TYPE DECLARATIONs
+- Defining an alias for a type
+- type Celsius float64
+
+> INITIALIZATION
+- var x int = 100
+  var x = 100
+- Unintialized variables have a zero or ""
+
+> SHORT VARIABLE DECLARATIONS
+- Can perform declaration and initialization together
+- Only inside a function
+- x := 100
+
+=> POINTERS
+var y int
+var x *int
+x = &y
+
+> NEW
+- new() returns a pointer to variable
+- ptr := new(int)
+*ptr = 3
+
+> VARIABLE SCOPE
+Go is lexically scoped using blocks
+- Done using blocks {}
+- Universal block
+- Package block
+- File block
+- if, for, switch, select
+
+=> STACK VS HEAP
+- Stack: Func calls and local var
+- Deallocated after func call
+- Heap: global, explicitly allocated (malloc in C)
+- Manually deallocate
+
+=> GARBAGE COLLECTION
+> Pointers make it difficult to determine when the variable is no longer in use
+> GC done by interpreter normally
+> In go, implementation is fast
+> Compiler determines heap vs stack
+> Some performance hit as automatically running in background, yet efficient and useful
+
+=> COMMENTS
+// This is a comment
+/* Multiline
+Comment */
+
+=> PRINTING
+- Import from fmt package
+- fmt.Printf("Hi" + x) or fmt.Println("")
+
+> FORMATTING
+- fmt.Printf("Hi %s", x)
+
+=> INTEGERS
+Generic: int
+int8, int16, int32, int64, uint8, uint16,...uint64
+
+=> TYPE CONVERSIONS
+x = int32(y)
+
+=> FLOATING POINT
+float32 (~ 6 digits precision), float64(~ 15)
+-Can be expressed using e notation
+
+> Complex numbers
+complex128
+var x complex128 = complex(2,3)
+
+=> STRINGS
+- Immutable
+- Default char is UTF-8
+
+> UNICODE package (working with runes or code points(char))
+IsDigit(), IsSpace(), ToUpper(), ToLower() etc
+
+> STRINGS package
+- String search funs: Compare(), Contains(), HasPrefix(), Index()
+- String manipulation: Replace(), ToLower(), ToUpper(), TrimSpace()
+
+> STRCONV package
+- Atoi(s): string to int
+- Itoa(): int base 10 to string
+- FormatFloat(): float to string
+- ParseFloat(): string to float
+
+=> CONSTANTS
+- Type is inferred from RHS
+- iota: Generate a set of related but distinct constants
+Eg: Days of week, months of year
+- Actual value is not imp
+- type Grade int
+const(
+	A Grade = iota
+	B
+	C
+	D
+)
+- Each const is assigned to a unique int
+
+
+==> CONTROL FLOW
+if x > 5 {
+	fmt.Printf("Yes")
+}
+
+for i:=0; i<10; i++{
+	
+}
+- You can skip initialization, condition and step
+i := 0
+for i < 10{
+	
+}
+
+for {
+	
+}
+
+=> SWITCH
+switch x{
+	case 1:
+	fmt.Printf("case1")
+	default:
+	fmt.Printf("default")
+}
+- No need to use break statement, it automatically breaks
+
+> TAGLESS SWITCH
+- Executes the first case with condition true
+switch {
+	case x>1:
+	fmt...
+	case x<1:
+	fmt...
+}
+
+=> BREAK and CONTINUE
+
+==> SCAN
+fmt.Scan(&appleNum)
+
+
+==> ARRAYS
+var x [5]int
+- Initialized to 0 value
+- var x [5]int = [5]{1,2,3,4,5}
+- x := [...]int{1,2,3}
+
+> ITERATING THROUGH ARRAYS
+- range keyword
+- Returns index(i) and value(v) at index(i) in array x
+for i, v range x{
+}
+
+==>SLICES
+- A window over underlying array
+- variable size, upto whole array
+- It has pointer, length, capacity
+Pointer indicates start of slice
+Length of slice
+Capacity is max no. of elements
+- s1 := arr[2:5] - elements 2 to 4
+- len(), cap()
+- Writing to slice changes the underlying array
+- Slice literals can be used to initialize the slice which creates an underlying array and slice points to entire array
+sli := []int{1,2,3}
+
+> MAKE
+- Create slice w/o initializing it
+- make(type, len, cap) or len(type, len/cap)
+- make([]int, 10)
+
+> APPEND
+- Add elememts to end of the slice (even beyond the size of array ie creates new array)
+append(sli, data)
+
+=> HASH TABLES
+- Key/value pairs
+- Each key is unique
+- Hash function is used
+- Accessed using keys
+- Adv:
+	- Faster lookup than lists
+	- Arbitrary keys
+- Disadv:
+	- Collisions
+
+==> MAPS
+- Implementation of hash tables in golang
+var idMap map[string]int
+- Use make() to create a map
+idMap = make(map[string]int)
+- Or a map literal
+idMap := map[string]int {"key":value}
+
+> ACCESSING
+idMap["key"]
+
+> DELETING
+delete(idMap, "key")
+
+> id, p := idMap["key"]
+p is bool value which is true if key is present in map
+id is the value
+
+> len(map)
+
+> ITERATING
+for key,value := range idMap{}
+
+==> STRUCTS
+- Groups together objects of arbitrary datatypes
+type Person struct {
+	name string
+	phone string
+}
+
+var p1 Person
+
+- p1.name
+- Can use new()
+p1 := new(Person)
+- init to zero values
+- Can use struct literal
+p1 := Person{name:"joe",phone:"123"}
+
+
+===> Protocols and Formats
+==> RFCs(Request for Comment)
+- Defns of Internet Protocols and formats
+> Protocol packages in go to encode and decode in a format
+- net/http: Web communication protocol
+- net: TCP/IP and socket programming
+
+==> JSON (RFC 7159)
+> JSON MARSHALLING
+- "encoding/json" package
+- Convert go struct to JSON
+var p1 Person
+bytearr, err = json.Marshal(p1)
+
+> UNMARSHALLING
+- Convert JSON[] to go struct
+var p2 Person
+err := json.Unmarshal(bytearr, &p2)
+- JSON must fit the struct
+
+
+===> FILES
+> BASIC OPS:
+- open
+- read
+- write
+- seek
+- close
+
+==> io/ioutil package
+> READ FILE
+- bytearr, e:=ioutil.ReadFile(fname)
+- Implicit open/close
+- Prob with large files
+
+> WRITE FILE
+- err:=ioutil.WriteFile(fname,bytearr, 0777)
+- Create a new file
+- Third arg is permissions in unix style
+
+==> os package
+> READ FILE
+- fd, err:=os.Open(fname) - returns file desp
+- f.Close()
+- nb, err:=f.Read(bytearr) - fills byte[]
+returns no. of bytes read
+
+> CREATE/WRITE FILE
+- f, err:=os.Create(fname)
+- nb, err:=f.Write(bytearr)
+- nb, err:=f.WriteString(str) //writes a string
+
+
+===> FUNCTIONS
+
+func f1(x, y int) (int, int) {
+	return x, y
+}
+
+func f2(x *int)
+
+- Arrays are passed by value
+- Pass by pointer
+func f3( x *[3]int)
+- Instead, pass slices
+
+> Functions are first-class values
+- Functions are treated like other types
+- Var can be declared with a func type
+- Can be created dynamically
+- Can be passed as arguments and return as values
+- Can be stored in data structures
+
+- Functions can be assigned to a variable
+var funcVar func(int) int 
+func incFn{
+	
+}
+funcVar = incFn
+x:=funcVar(1)
+
+- Functions can be passed as arguments
+func applyIt(afunct func(int) int, val int)int{
+	return afunct(val)
+}
+
+applyIt(func (x int) int {return x+1},2)
+
+- Function defines a function
+
+> CLOSURE: Function + environment
+
+> VARIABLE ARGUMENTS
+- v ...int
+- Inside function, v is slice
+- The argument can also be a slice but suffixed with ...
+(vlice...)
+
+> DEFERRED FUNCTION CALLS
+- Call can be deferred till surrounding func completes
+- Used for clean up
+- Arguments are evaluated immediately
+defer fmt.Println(i+1)
+
+
+===> OBJECT-ORIENTEDNESS
+- No class keyword
+> Associating methods with data
+- Method has a receiver type that is associated with'
+type MyInt int
+
+func (mi MyInt) Double() int {
+	return int(mi*2)
+}
+
+v:=MyInt(3)
+v.Double()
+
+- v is passed implicitly by copying
+- Call by value
+- Structs can also be used as receiver types
+> Controlling access
+- Define functions in other package
+- Start with lowercase letter to hide/restrict them to outer package
+
+-Method can't modify data inside receiver
+- If receiver is large, lot of copying is required
+- So use pointer receivers
+func (p *Point) OffsetX(v float64) {
+	p.v
+}
+- No need to dereference or reference
+- Good practice all pointer receivers or none
+
+
+==> INHERITANCE
+- No concept in golang
+> INTERFACES
+-type Shape interface {
+	Area()
+	Perimeter()
+}
+type Triangle {...}
+func (t Triangle) Area(){}
+- Interfaces can have dynamic type but nil dynamic value i.e var t *Triangle
+- Still it can access methods of interface
+- But nil dynamic type can't access i.e just var s Speaker
+
+> Empty interface: var interface{}
+
+> TYPE ASSERTATIONS
+In a particular situation where you need to determine the concrete type of obj which we have generalised with an interface, we need type assertion
+- we have s Shape2D
+- rect, ok := s.(Rectangle)
+- Extracts rectangle from Shape2D and ok is true of it is rect
+- So need to check for each child obj, for this use switch
+switch:= sh:=s.(type)
+
+=> ERROR INTERFACE
+type error interface{
+	Error() string
+}
+
+
+===> MOORE'S LAW	
+- Prediction that density of transistors on IC doubles every 2 years
+
+
+===> GO Routines
+- A thread in Go
+- Schedule a goroutine inside a go thread
+- Go Runtime scheduler
+- Logical processor is mapped to thread
+- One goroutine is automatically created called main
+- New goroutines are created using go keyword
+eg. go foo()
+- When the main goroutine exits, other sub goroutines are forced to exit
+- Use time.Sleep(n * time.Millisecond)
+- Timing assumption may be wrong
+
+=> SYNCHRONIZATION
+- Using global events that is viewed by all threads simultaneously
+- Synchronization is used to avoid bad interleavings
+- When we use synchronization, we may reduce efficiency as we are reducing concurrency
+
+> Sync Waitgroup
+- Funcs to sync goroutines
+- sync.WaitGroup forces a goroutine to wait for other goroutines
+- It contains an internal counter: increment for each goroutine to wait for; decrement when a goroutine completes
+- Exit the goroutine when counter reaches 0
+- Add() - increments the counter
+- Done() - decrements the counter (at the end of any goroutine): you can use defer to make sure it is called at the end of goroutine
+- Wait() - called inside the goroutine which should wait; blocks till counter==0
+- Pass the ref of waitgroup obj to the goroutine
+
+=> GOROUTINE COMMUNICATION
+- May require data transfer between goroutines
+- Channels are used for this which is typed
+c := make(chan int)
+- Send data to channel
+c <- 3
+- Receive data from channel
+x := <- c
+- Also pass the channel to the goroutines
+- By default, channel is unbuffered i.e it can't hold data in transit
+- Channels can be also used for synchronization
+> Buffered channels
+- Channels can contain a limited no. of objects or capacity to hold
+c := make(chan int, 3)
+- Sending only blocks only when buffer full
+- Receiving only blocks only when buffer empty
+- We need to iterate through channel to read from it.
+- We can use close(c) to close the channel and stop reading
+- We can use multiple channels to read from multiple sources
+- Use a select statement to wait on a set of channels
+- We can use select on send or receive
+> ABORT CHANNEL
+- When there is some error on any channel, abort is called i.e signal is sent on abort channel
+case <-abort
+- default case of switch can be used to not block on any of the channels in the set
+
+- Concurrency-safe is when goroutines don't interfere with each other
+- Interleaving m/c instructions may cause problem
+- So we require mutual exclusion
+> MUTUAL EXCLUSION
+- Binary semaphore or mutex ensures 
+- sync.Mutex in go uses binary semaphore
+- Lock() puts the flag up (Shared var in use)
+- Unlock() puts the flag down
+- Lock() is blocking
+- Unlock() is called, a blocked Lock() can proceed
+
+=> ONCE SYNCHRONIZATION
+> Synchronous initialization
+sync.Once
+- once.Do(f) in all goroutines
+- Func f is executed only one time before all goroutines
+- All other calls block until first call to Do returns
+
+> DEADLOCK
+- Synchronization may lead to deadlock
+- Go runtime can detect when 'all' goroutines are deadlocked
+
+> DINING PHILOSOPHERS
+- Each chopstick is a mutex
+- Each philosopher is associated with a goroutine and two chopsticks
+- Deadlock problem when all take left chopstick first
+- Soln: Each philosopher picks up lowered numbered chopstick first
+- No deadlock but philosopher 4 may starve
